@@ -8,18 +8,36 @@
  */
 class Solution {
 public:
-	ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-		unordered_map<ListNode*, int> m;
-		while(headA != NULL){
-			m[headA]++;
-			headA = headA -> next;
-		}
-		while(headB != NULL){
-			if(m[headB] > 0){
-				return headB;
-			}
-			headB = headB -> next;
-		}
-		return NULL;
-	}
+    // Helper function to calculate the length of the list
+    int getListLength(ListNode *head) {
+        int length = 0;
+        while (head != NULL) {
+            length++;
+            head = head->next;
+        }
+        return length;
+    }
+
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        int lenA = getListLength(headA);
+        int lenB = getListLength(headB);
+
+        // Align the start of both lists
+        while (lenA > lenB) {
+            lenA--;
+            headA = headA->next;
+        }
+        while (lenB > lenA) {
+            lenB--;
+            headB = headB->next;
+        }
+
+        // Traverse both lists together to find the intersection point
+        while (headA != headB) {
+            headA = headA->next;
+            headB = headB->next;
+        }
+
+        return headA;
+    }
 };

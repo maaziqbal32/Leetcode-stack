@@ -1,16 +1,16 @@
+#include <unordered_set>
+#include <vector>
+
 class Solution {
 public:
     bool containsDuplicate(vector<int>& nums) {
-       unordered_set<int>s(nums.begin(),nums.end());
-       int x=nums.size();
-       int y=s.size();
-       if(x==y){
-        return false;
-       }
-       else
-       {
- return true;
-       }
+        std::unordered_set<int> seen;
+        for (int num : nums) {
+            if (seen.find(num) != seen.end()) {
+                return true;  // Duplicate found
+            }
+            seen.insert(num);
+        }
+        return false;  // No duplicates found
     }
-  
 };
